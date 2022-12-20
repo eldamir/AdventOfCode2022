@@ -15,8 +15,17 @@ public class TestDay04_AssignmentPairs
     public void TestFindPairsContainingOthers()
     {
         var assignmentPairs = AssignmentDecoder.Decode(_data);
-        var fullyContainingAssignments = AssignmentService.FindFullyOverlappingAssignmentPairs(assignmentPairs);
+        var fullyContainingAssignments = AssignmentService.FindFullyContainingAssignmentPairs(assignmentPairs);
         
         Assert.Equal(2, fullyContainingAssignments.Count);
+    }
+    
+    [Fact]
+    public void TestFindPairsOverlappingOthers()
+    {
+        var assignmentPairs = AssignmentDecoder.Decode(_data);
+        var fullyContainingAssignments = AssignmentService.FindOverlappingAssignmentPairs(assignmentPairs);
+        
+        Assert.Equal(4, fullyContainingAssignments.Count);
     }
 }

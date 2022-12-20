@@ -15,6 +15,11 @@ public struct Range
     {
         return Expand().IsSupersetOf(other.Expand());
     }
+    
+    public bool Overlaps(Range other)
+    {
+        return Expand().Overlaps(other.Expand());
+    }
 
     private HashSet<int> Expand()
     {
