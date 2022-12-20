@@ -42,27 +42,18 @@ public class StackCollection
 
         return Strings.Join(chars.ToArray(), "");
     }
+
+    public ShippingContainer PopFromStack(int number)
+    {
+        return GetStack(number).Pop();
+    }
     
     public void PushToStack(int number, ShippingContainer crate)
     {
         GetStack(number).Push(crate);
     }
 
-    public void ApplyInstructions(List<MoveInstruction> instructions)
-    {
-        foreach (var instruction in instructions)
-        {
-            ApplyInstruction(instruction);
-        }
-    }
-
-    public void ApplyInstruction(MoveInstruction instruction)
-    {
-        Enumerable.Repeat(0, instruction.Count).ToList()
-            .ForEach(moveCount => Move(instruction.From, instruction.To));
-    }
-
-    private void Move(int from, int to)
+    public void Move(int from, int to)
     {
         var crate = GetStack(from).Pop();
         PushToStack(to, crate);

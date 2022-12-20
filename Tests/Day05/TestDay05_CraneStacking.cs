@@ -44,16 +44,32 @@ move 1 from 1 to 2";
     }
 
     [Fact]
-    public void TestCanMoveCratesCorrectly()
+    public void TestCanMoveCratesCorrectlyWithCrateMover9000()
     {
         var stackState = StackParser.Parse(_data);
         var craneInstructions = InstructionParser.Parse(_data);
+        var crane = new CrateMover9000();
         
-        stackState.ApplyInstructions(craneInstructions);
+        crane.Move(stackState, craneInstructions);
         
         Assert.Equal('C', stackState.PeekInStack(1).Identifier);
         Assert.Equal('M', stackState.PeekInStack(2).Identifier);
         Assert.Equal('Z', stackState.PeekInStack(3).Identifier);
         Assert.Equal("CMZ", stackState.PeekAllStacks());
+    }
+
+    [Fact]
+    public void TestCanMoveCratesCorrectlyWithCrateMover9001()
+    {
+        var stackState = StackParser.Parse(_data);
+        var craneInstructions = InstructionParser.Parse(_data);
+        var crane = new CrateMover9001();
+        
+        crane.Move(stackState, craneInstructions);
+        
+        Assert.Equal('M', stackState.PeekInStack(1).Identifier);
+        Assert.Equal('C', stackState.PeekInStack(2).Identifier);
+        Assert.Equal('D', stackState.PeekInStack(3).Identifier);
+        Assert.Equal("MCD", stackState.PeekAllStacks());
     }
 }
