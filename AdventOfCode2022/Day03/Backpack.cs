@@ -4,6 +4,7 @@ public class Backpack
 {
     public List<SupplyItem> Compartment1 { get; }
     public List<SupplyItem> Compartment2 { get; }
+    public List<SupplyItem> AllCompartments => Compartment1.Concat(Compartment2).ToList();
 
     public Backpack()
     {
