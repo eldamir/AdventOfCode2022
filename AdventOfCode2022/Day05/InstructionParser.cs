@@ -10,7 +10,8 @@ public class InstructionParser
         // Get the instruction part of the data and discard the stack data
         var instructionString = data.Split(Environment.NewLine + Environment.NewLine)[1];
 
-        return instructionString.Split(Environment.NewLine)
+        return instructionString
+            .Split(Environment.NewLine)
             .Select(line => Regex.Matches(line, @"\d+").Select(match => int.Parse(match.Value)).ToList())
             .Select(parts => new MoveInstruction
             {
