@@ -1,9 +1,9 @@
 ﻿namespace AdventOfCode2022.Day06;
 
-public class BreakWhenAllDifferent : IStrategy
+public class StartOfPacket : IStrategy
 {
     private Queue<char> _queue = new();
-    private int _maxQueueSize = 4;
+    protected int _maxQueueSize = 4;
     private int _itemsRead = 0;
     
     public void Clear()
@@ -25,7 +25,7 @@ public class BreakWhenAllDifferent : IStrategy
 
     public bool IsInputSatisfied()
     {
-        return _queue.Count >= 4;
+        return _queue.Count >= _maxQueueSize;
     }
 
     public ScanResult Match()

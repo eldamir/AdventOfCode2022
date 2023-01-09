@@ -7,7 +7,7 @@ public class TestDay06_SignalProcessing
     [Fact]
     public void TestStrategyClearsProperly()
     {
-        IStrategy strategy = new BreakWhenAllDifferent();
+        IStrategy strategy = new StartOfPacket();
         Scanner scanner = new Scanner(strategy);
 
         scanner.Scan("aaaa");
@@ -18,9 +18,9 @@ public class TestDay06_SignalProcessing
     }
     
     [Fact]
-    public void TestCanScanForPattern()
+    public void TestCanScanForStartOfPacket()
     {
-        IStrategy strategy = new BreakWhenAllDifferent();
+        IStrategy strategy = new StartOfPacket();
         Scanner scanner = new Scanner(strategy);
 
         ScanResult scanResult;
@@ -32,5 +32,24 @@ public class TestDay06_SignalProcessing
         Assert.Equal(10, scanResult.Count);
         scanResult = scanner.Scan("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw");
         Assert.Equal(11, scanResult.Count);
+    }
+    
+    [Fact]
+    public void TestCanScanForStartOfMessages()
+    {
+        IStrategy strategy = new StartOfMessage();
+        Scanner scanner = new Scanner(strategy);
+
+        ScanResult scanResult;
+        scanResult = scanner.Scan("mjqjpqmgbljsphdztnvjfqwrcgsmlb");
+        Assert.Equal(19, scanResult.Count);
+        scanResult = scanner.Scan("bvwbjplbgvbhsrlpgdmjqwftvncz");
+        Assert.Equal(23, scanResult.Count);
+        scanResult = scanner.Scan("nppdvjthqldpwncqszvftbrmjlhg");
+        Assert.Equal(23, scanResult.Count);
+        scanResult = scanner.Scan("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg");
+        Assert.Equal(29, scanResult.Count);
+        scanResult = scanner.Scan("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw");
+        Assert.Equal(26, scanResult.Count);
     }
 }
