@@ -10,11 +10,24 @@ public class Output
         FileSystemItem root = parser.Parse(commands);
         root.RecalculateFolderSizes();
 
-        List<FileSystemItem> items = root.Query(
+        List<FileSystemItem> itemsPart1 = root.Query(
             f => f.Type == FileSystemItemType.Directory && f.Size <= 100000
             );
 
-        var sum = items.Sum(x => x.Size);
+        var sum = itemsPart1.Sum(x => x.Size);
         Console.WriteLine($"Sum of folder sizes where size is at most 100000: {sum}");
+
+        long diskSize = 70000000;
+        long neededSpace = 30000000;
+        long usedSpace = root.Size;
+        long unusedSpace = diskSize - usedSpace;
+        List<FileSystemItem> itemsPart2 = root.Query(
+            f => f.Type == FileSystemItemType.Directory 
+                 && f.Size + unusedSpace >= neededSpace
+            );
+
+        var item = itemsPart2.OrderBy(x => x.Size).First();
+        Console.WriteLine($"Smallest folder to delete, that makes enough room is: " +
+                          $"{item.Name} with {item.Size}");
     }
 }
