@@ -1,10 +1,10 @@
 ﻿namespace AdventOfCode2022.Day08;
 
-public class Scanner
+public class InputScanner
 {
     public Map Scan(string input)
     {
-        var lines = input.Split("\n");
+        var lines = input.Split("\n").Select(x => x.Trim()).ToArray();
         var height = lines.Length;
         var width = lines.First().Length;
 

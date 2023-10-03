@@ -13,8 +13,8 @@ public class TestDay08_TreeHouse
     [Fact]
     public void TestCanParseInput()
     {
-        Scanner scanner = new Scanner();
-        Map map = scanner.Scan(_commandString);
+        InputScanner inputScanner = new InputScanner();
+        Map map = inputScanner.Scan(_commandString);
         
         Assert.Equal(3, map.GetValue(0, 0));
         Assert.Equal(0, map.GetValue(1, 0));
@@ -29,21 +29,35 @@ public class TestDay08_TreeHouse
     [Fact]
     public void TestCanCount()
     {
-        Scanner scanner = new Scanner();
-        Map map = scanner.Scan(_commandString);
+        InputScanner inputScanner = new InputScanner();
+        Map map = inputScanner.Scan(_commandString);
+        var scan = new VisibilityScan(map);
         
-        Assert.Equal(25, map.CountValid());
+        Assert.Equal(25, scan.CountValid());
     }
     
     [Fact]
     public void TestCanFindVisibleTrees()
     {
-        Scanner scanner = new Scanner();
-        Map map = scanner.Scan(_commandString);
-        map.InvalidateObstructed();
+        InputScanner inputScanner = new InputScanner();
+        Map map = inputScanner.Scan(_commandString);
+        var scan = new VisibilityScan(map);
+        scan.Run();
 
-        var unobstructed = map.CountValid();
+        var unobstructed = scan.CountValid();
         
         Assert.Equal(21, unobstructed);
+    }
+    
+    [Fact]
+    public void TestCanFindScenicScores()
+    {
+        InputScanner inputScanner = new InputScanner();
+        Map map = inputScanner.Scan(_commandString);
+        var scan = new ScenicScoreScan(map);
+        scan.Run();
+
+        Assert.Equal(4, scan.Get(2, 1));
+        Assert.Equal(8, scan.Get(2, 3));
     }
 }
