@@ -45,6 +45,54 @@ R 2";
     }
 
     [Fact]
+    public void TestCanMoveRight()
+    {
+        InstructionSet instructions = new InstructionSet();
+        instructions.Commands.Add(new Instruction(Direction.Right, 3));
+        
+        RopeWorld world = new RopeWorld();
+        world.ExecuteInstructions(instructions);
+        
+        Assert.Equal(new Coordinate(3, 0), world.HeadPosition); 
+    }
+
+    [Fact]
+    public void TestCanMoveLeft()
+    {
+        InstructionSet instructions = new InstructionSet();
+        instructions.Commands.Add(new Instruction(Direction.Left, 3));
+        
+        RopeWorld world = new RopeWorld();
+        world.ExecuteInstructions(instructions);
+        
+        Assert.Equal(new Coordinate(-3, 0), world.HeadPosition); 
+    }
+
+    [Fact]
+    public void TestCanMoveUp()
+    {
+        InstructionSet instructions = new InstructionSet();
+        instructions.Commands.Add(new Instruction(Direction.Up, 3));
+        
+        RopeWorld world = new RopeWorld();
+        world.ExecuteInstructions(instructions);
+        
+        Assert.Equal(new Coordinate(0, 3), world.HeadPosition); 
+    }
+
+    [Fact]
+    public void TestCanMoveDown()
+    {
+        InstructionSet instructions = new InstructionSet();
+        instructions.Commands.Add(new Instruction(Direction.Down, 3));
+        
+        RopeWorld world = new RopeWorld();
+        world.ExecuteInstructions(instructions);
+        
+        Assert.Equal(new Coordinate(0, -3), world.HeadPosition); 
+    }
+
+    [Fact]
     public void TestTailDoesNotMoveWhenCloseToHead()
     {
         RopeWorld world = new RopeWorld();
