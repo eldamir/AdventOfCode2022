@@ -13,7 +13,7 @@ public class InputScanner
         foreach (var line in lines)
         {
             var directionChar = line[0];
-            var stepsChar = line[2];
+            var stepsString = line.Substring(2);
 
             var direction = directionChar switch
             {
@@ -23,7 +23,7 @@ public class InputScanner
                 'D' => Direction.Down,
                 _ => Direction.Unknown
             };
-            var steps = int.Parse(stepsChar.ToString());
+            var steps = int.Parse(stepsString);
             var command = new Instruction(direction, steps);
             instructions.Commands.Add(command);
         }

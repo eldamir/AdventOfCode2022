@@ -31,6 +31,19 @@ R 2";
         Assert.Equal(Direction.Right, instructions.Commands[7].Direction);
         Assert.Equal(2, instructions.Commands[7].Steps);
     }
+    
+    [Fact]
+    public void TestCanParseInputWithNumbersLargerThan9()
+    {
+        InputScanner inputScanner = new InputScanner();
+        InstructionSet instructions = inputScanner.Scan("R 9\nD 9001");
+        
+        Assert.Equal(2, instructions.Commands.Count);
+        Assert.Equal(Direction.Right, instructions.Commands[0].Direction);
+        Assert.Equal(9, instructions.Commands[0].Steps);
+        Assert.Equal(Direction.Down, instructions.Commands[1].Direction);
+        Assert.Equal(9001, instructions.Commands[1].Steps);
+    }
 
     [Fact]
     public void TestCanTrackTailMovement()

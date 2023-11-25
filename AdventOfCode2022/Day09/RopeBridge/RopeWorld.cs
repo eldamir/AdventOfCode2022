@@ -5,34 +5,20 @@ public class RopeWorld
     public Coordinate HeadPosition = new(0, 0);
     public Coordinate TailPosition = new(0, 0);
     private readonly HashSet<Coordinate> _positionsVisitedByTail = new();
-    private Func<RopeWorld, RopeWorld>? _stepCallback;
 
     public RopeWorld()
     {
         _positionsVisitedByTail.Add(new Coordinate(0, 0));
     }
 
-    public void SetStepCallback(Func<RopeWorld, RopeWorld> callback)
-    {
-        _stepCallback = callback;
-    }
-
     public void ExecuteInstructions(InstructionSet instructions)
     {
         foreach (var instruction in instructions.Commands)
         {
-            if (_stepCallback != null)
-            {
-                Console.WriteLine(instruction.ToString());
-            }
             for (int i = 0; i < instruction.Steps; i++)
             {
                 MoveHead(instruction);
                 MoveTail();
-                if (_stepCallback != null)
-                {
-                    _stepCallback(this);
-                }
             }
         }
     }
