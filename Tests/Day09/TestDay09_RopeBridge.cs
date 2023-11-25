@@ -162,4 +162,24 @@ R 2";
     }
     
     record Foo(int number);
+    
+
+    [Fact]
+    public void TestCanMoveLongerRopeInSameManner()
+    {
+        var instructionString = @"R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20";
+        RopeWorld world = new RopeWorld(ropeLength:10);
+        InputScanner inputScanner = new InputScanner();
+        InstructionSet instructions = inputScanner.Scan(instructionString);
+        world.ExecuteInstructions(instructions);
+    
+        Assert.Equal(36, world.GetCoordinatesVisitedByTail());
+    }
 }

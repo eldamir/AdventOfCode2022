@@ -4,11 +4,16 @@ public class RopeWorld
 {
     public Coordinate HeadPosition = new(0, 0);
     public Coordinate TailPosition = new(0, 0);
+    private readonly List<Coordinate> _rope = new();
     private readonly HashSet<Coordinate> _positionsVisitedByTail = new();
 
-    public RopeWorld()
+    public RopeWorld(int ropeLength = 2)
     {
         _positionsVisitedByTail.Add(new Coordinate(0, 0));
+        for (int i = 0; i < ropeLength; i++)
+        {
+            _rope.Add(new Coordinate(0, 0));
+        }
     }
 
     public void ExecuteInstructions(InstructionSet instructions)
@@ -40,12 +45,29 @@ public class RopeWorld
                 HeadPosition = HeadPosition with { Y = HeadPosition.Y - 1 };
                 break;
         }
+
+        _rope[0] = HeadPosition;
     }
 
     private void MoveTail()
     {
-        int deltaX = HeadPosition.X - TailPosition.X;
-        int deltaY = HeadPosition.Y - TailPosition.Y;
+        for (int i = 1; i < _rope.Count; i++)
+        {
+            
+            MoveTailPart(_rope[i], _rope[i - 1], i);
+        }
+
+        var tail = _rope.Last();
+        var tailIndex = _rope.Count - 1;
+        MoveTailPart(tail, _rope[tailIndex - 1], tailIndex);
+        TailPosition = tail;
+        _positionsVisitedByTail.Add(TailPosition);
+    }
+
+    private void MoveTailPart(Coordinate tailPart, Coordinate parentLink, int tailIndex)
+    {
+        int deltaX = parentLink.X - tailPart.X;
+        int deltaY = parentLink.Y - tailPart.Y;
         
         // If the head is in a neighboring spot, the tail does not move
         var isNeighbor = Math.Abs(deltaX) <= 1 && Math.Abs(deltaY) <= 1;
@@ -54,13 +76,12 @@ public class RopeWorld
             int movementHorizontal = deltaX == 0 ? 0 : deltaX / Math.Abs(deltaX);
             int movementVertical = deltaY == 0 ? 0 : deltaY / Math.Abs(deltaY);
 
-            TailPosition = TailPosition with
+            _rope[tailIndex] = tailPart with
             {
-                X = TailPosition.X + movementHorizontal,
-                Y = TailPosition.Y + movementVertical
+                X = tailPart.X + movementHorizontal,
+                Y = tailPart.Y + movementVertical
             };
         }
-        _positionsVisitedByTail.Add(TailPosition);
     }
 
     public int GetCoordinatesVisitedByTail()
